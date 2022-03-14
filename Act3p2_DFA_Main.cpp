@@ -5,7 +5,7 @@ Author:
 - Jeshua Nava Avila | A01639282
 Date of creation and last modification:
 - 03/13/2022
-- 03/xx/2022
+- 03/14/2022
 */
 #include <iostream>
 #include <vector>
@@ -54,9 +54,33 @@ std::unordered_map<std::string, std::string> q15({{"Esp", "q15"}, {"P","q1"}, {"
  * @param vector Vector which we print each element.
  */
 void printTable(std::vector<std::string> vecToken, std::vector<std::string> vecType){
-    for (int i=0; i < vecToken.size(); i++){
-        std::cout << vecToken[i] << "||" << vecType[i] << std::endl;
+    int numSpaces = 0;
+    // Find largest element (according to size).
+    for (int i=0; i < vecToken.size(); i++){ if (vecToken[i].size() > numSpaces){numSpaces = vecToken[i].size();}}
+    numSpaces += 5; // So we can have seperation in the table.
+    // Print the first half.
+    for (int i=0; i < numSpaces; i++){std::cout << "-";}
+    std::cout << "-------------------------------------------------" << std::endl;
+    std::cout << "| Token";
+    for (int i=0; i < (numSpaces - 6); i++){
+        std::cout << " ";
     }
+    std::cout << " | Tipo                                        |" << std::endl;
+    for (int i=0; i < numSpaces; i++){std::cout << "-";}
+    std::cout << "-------------------------------------------------" << std::endl;
+    for (int i=0; i < vecToken.size(); i++){
+        std::cout << "| " << vecToken[i];
+        for (int e=0; e < (numSpaces - vecToken[i].size()); e++){
+            std::cout << " ";
+        }
+        std::cout << "| " << vecType[i];
+        for (int e=0; e < (44 - vecType[i].size()); e++){
+            std::cout << " ";
+        }
+        std::cout << "|" << std::endl;
+    }
+    for (int i=0; i < numSpaces; i++){std::cout << "-";}
+    std::cout << "-------------------------------------------------" << std::endl;
 }
 /**
  * @brief Give the state depending what is the input, according to the transition table.
@@ -139,6 +163,8 @@ std::string extendedTranFunc(std::string state, std::string str){
             tokens.push_back(currentToken); type.push_back("Division"); currentToken = "";
         } else if (currentToken == "-"){
             tokens.push_back(currentToken); type.push_back("Resta o Negativo"); currentToken ="";
+        } else if (currentToken == "+"){
+            tokens.push_back(currentToken); type.push_back("Suma"); currentToken ="";
         } else if (currentToken == "*"){
             tokens.push_back(currentToken); type.push_back("Multiplicacion"); currentToken ="";
         } else if (currentToken == "^"){
