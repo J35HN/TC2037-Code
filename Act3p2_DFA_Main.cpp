@@ -40,12 +40,12 @@ std::unordered_map<std::string, std::string> q3({{"Esp", "q0"}, {"P","q13"}, {"N
 std::unordered_map<std::string, std::string> q4({{"Esp", "q0"}, {"P","q13"}, {"N", "q4"}, {"Und", "q13"}, {"eE", "q13"}, {"xX", "q13"}, {"H", "q13"}, {"0", "q4"}, {".", "q13"}, {"-", "q12"}, {"/", "q12"}, {"(", "q14"}, {")", "q15"}, {"S", "q12"}});
 std::unordered_map<std::string, std::string> q5({{"Esp", "q13"}, {"P","q13"}, {"N", "q4"}, {"Und", "q13"}, {"eE", "q13"}, {"xX", "q13"}, {"H", "q13"}, {"0", "q4"}, {".", "q13"}, {"-", "q4"}, {"/", "q13"}, {"(", "q13"}, {")", "q13"}, {"S", "q13"}});
 std::unordered_map<std::string, std::string> q6({{"Esp", "q13"}, {"P","q13"}, {"N", "q3"}, {"Und", "q13"}, {"eE", "q13"}, {"xX", "q13"}, {"H", "q13"}, {"0", "q3"}, {".", "q13"}, {"-", "q13"}, {"/", "q13"}, {"(", "q13"}, {")", "q13"}, {"S", "q13"}});
-std::unordered_map<std::string, std::string> q7({{"Esp", "q13"}, {"P","q13"}, {"N", "q8"}, {"Und", "q13"}, {"eE", "q13"}, {"xX", "q9"}, {"H", "q13"}, {"0", "q13"}, {".", "q6"}, {"-", "q12"}, {"/", "q12"}, {"(", "q14"}, {")", "q15"}, {"S", "q12"}});
+std::unordered_map<std::string, std::string> q7({{"Esp", "q13"}, {"P","q13"}, {"N", "q8"}, {"Und", "q13"}, {"eE", "q13"}, {"xX", "q9"}, {"H", "q13"}, {"0", "q8"}, {".", "q6"}, {"-", "q12"}, {"/", "q12"}, {"(", "q14"}, {")", "q15"}, {"S", "q12"}});
 std::unordered_map<std::string, std::string> q8({{"Esp", "q0"}, {"P","q13"}, {"N", "q8"}, {"Und", "q13"}, {"eE", "q13"}, {"xX", "q13"}, {"H", "q13"}, {"0", "q8"}, {".", "q13"}, {"-", "q12"}, {"/", "q12"}, {"(", "q14"}, {")", "q15"}, {"S", "q12"}});
 std::unordered_map<std::string, std::string> q9({{"Esp", "q13"}, {"P","q13"}, {"N", "q10"}, {"Und", "q13"}, {"eE", "q10"}, {"xX", "q13"}, {"H", "q10"}, {"0", "q10"}, {".", "q13"}, {"-", "q13"}, {"/", "q13"}, {"(", "q13"}, {")", "q13"}, {"S", "q13"}});
 std::unordered_map<std::string, std::string> q10({{"Esp", "q0"}, {"P","q13"}, {"N", "q10"}, {"Und", "q13"}, {"eE", "q10"}, {"xX", "q13"}, {"H", "q10"}, {"0", "q10"}, {".", "q13"}, {"-", "q12"}, {"/", "q12"}, {"(", "q14"}, {")", "q15"}, {"S", "q12"}});
 std::unordered_map<std::string, std::string> q11({{"Esp", "q11"}, {"P","q11"}, {"N", "q11"}, {"Und", "q11"}, {"eE", "q11"}, {"xX", "q11"}, {"H", "q11"}, {"0", "q11"}, {".", "q11"}, {"-", "q11"}, {"/", "q11"}, {"(", "q11"}, {")", "q11"}, {"S", "q11"}});
-std::unordered_map<std::string, std::string> q12({{"Esp", "q12"}, {"P","q1"}, {"N", "q2"}, {"Und", "q13"}, {"eE", "q1"}, {"xX", "q1"}, {"H", "q1"}, {"0", "q7"}, {".", "q6"}, {"-", "q13"}, {"/", "q11"}, {"(", "q14"}, {")", "q13"}, {"S", "q13"}});
+std::unordered_map<std::string, std::string> q12({{"Esp", "q0"}, {"P","q1"}, {"N", "q2"}, {"Und", "q13"}, {"eE", "q1"}, {"xX", "q1"}, {"H", "q1"}, {"0", "q7"}, {".", "q6"}, {"-", "q13"}, {"/", "q11"}, {"(", "q14"}, {")", "q13"}, {"S", "q13"}});
 std::unordered_map<std::string, std::string> q13({{"Esp", "q13"}, {"P","q13"}, {"N", "q13"}, {"Und", "q13"}, {"eE", "q13"}, {"xX", "q13"}, {"H", "q13"}, {"0", "q13"}, {".", "q13"}, {"-", "q13"}, {"/", "q13"}, {"(", "q13"}, {")", "q13"}, {"S", "q13"}});
 std::unordered_map<std::string, std::string> q14({{"Esp", "q14"}, {"P","q1"}, {"N", "q2"}, {"Und", "q13"}, {"eE", "q1"}, {"xX", "q1"}, {"H", "q1"}, {"0", "q7"}, {".", "q6"}, {"-", "q12"}, {"/", "q13"}, {"(", "q14"}, {")", "q15"}, {"S", "q13"}});
 std::unordered_map<std::string, std::string> q15({{"Esp", "q15"}, {"P","q1"}, {"N", "q1"}, {"Und", "q13"}, {"eE", "q1"}, {"xX", "q1"}, {"H", "q1"}, {"0", "q7"}, {".", "q13"}, {"-", "q12"}, {"/", "q12"}, {"(", "q14"}, {")", "q15"}, {"S", "q12"}});
@@ -156,7 +156,6 @@ std::string extendedTranFunc(std::string state, std::string str){
             else if (state == "q10"){ tokens.push_back(currentToken); type.push_back("Hexadecimal"); currentToken = "";}
         }
     }
-    //std::cout << currentToken << ":" << state << std::endl;
     if (state == "q12" || state == "q14" || state == "q15"){
         // We check what kind of operator we have.
         if (currentToken == "/" && globalState != "q11"){ // Means we our not in a comment.
@@ -200,7 +199,7 @@ void lexerAritmetico(std::string archivo){
     while (getline(openArchivo, line)) {
         if (errorFound == true) {break;}
         lastState = extendedTranFunc("q0", line);
-        // Check if we have a token in currentToken.
+        // Check if we have a token in currentToken. If we do, 
         if (currentToken.size() > 0){
             if (lastState == "q11"){
                 tokens.push_back(currentToken);
@@ -210,11 +209,13 @@ void lexerAritmetico(std::string archivo){
             else if (lastState == "q1"){ tokens.push_back(currentToken); type.push_back("Variable");}
             else if (lastState == "q2"){ tokens.push_back(currentToken); type.push_back("Entero");}
             else if (lastState == "q3" || lastState == "q4"){ tokens.push_back(currentToken); type.push_back("Real");}
+            else if (lastState == "q6"){ tokens.push_back(currentToken); type.push_back("Real");}
             else if (lastState == "q8"){ tokens.push_back(currentToken); type.push_back("Octal");}
             else if (lastState == "q10"){ tokens.push_back(currentToken); type.push_back("Hexadecimal");}
             else if (lastState == "q14"){ tokens.push_back(currentToken); type.push_back("Parentesis que abre");}
             else if (lastState == "q15"){ tokens.push_back(currentToken); type.push_back("Parentesis que cierra");}
             else {
+                if (errorFound = true){break;}
                 errorFound = true;
                 tokens.push_back(currentToken);
                 std::string errorMsg = "Error en Linea ";
