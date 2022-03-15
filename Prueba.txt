@@ -1,1 +1,9 @@
-_
+b = 7
+
+a = 32.4 *(-8.6 - b)/       6.1E-8
+
+d = a ^ b
+
+// c=35*19 ^ 3.     Esto es un comentario
+
+_a25 // error
