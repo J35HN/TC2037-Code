@@ -13,7 +13,7 @@ Date of creation and last modification:
 #include <fstream>
 #include <unordered_map>
 // Global variables
-std::string archivetxt = "Prueba.txt";
+std::string archivetxt = "Prueba.txt"; // Change this name to your corresponding .txt file. (don't forget to end with '.txt'.
 std::string globalState = "";
 std::string currentToken = "";
 bool errorFound = false;
@@ -83,7 +83,7 @@ void printTable(std::vector<std::string> vecToken, std::vector<std::string> vecT
     std::cout << "-------------------------------------------------" << std::endl;
 }
 /**
- * @brief Give the state depending what is the input, according to the transition table.
+ * @brief Give the next state depending what is the input, according to the transition table.
  * 
  * @param state State in which the DFA finds itself.
  * @param str Input that will determine the next state.
@@ -186,7 +186,6 @@ std::string extendedTranFunc(std::string state, std::string str){
     numColumn++; //Increment by one our line.
     return globalState;
 }
-
 /**
  * @brief Function that reads an archive with the DFA Lexer, and prints the corresponding tokens.
  * @param archivo Archive to read.
@@ -215,7 +214,7 @@ void lexerAritmetico(std::string archivo){
             else if (lastState == "q14"){ tokens.push_back(currentToken); type.push_back("Parentesis que abre");}
             else if (lastState == "q15"){ tokens.push_back(currentToken); type.push_back("Parentesis que cierra");}
             else {
-                if (errorFound = true){break;}
+                if (errorFound == true){break;}
                 errorFound = true;
                 tokens.push_back(currentToken);
                 std::string errorMsg = "Error en Linea ";
