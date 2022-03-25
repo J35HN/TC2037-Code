@@ -1,0 +1,26 @@
+"int" |tokenTypeName: PR_int
+"float" |tokenTypeName: PR_float
+"string" |tokenTypeName: PR_string
+"bool" |tokenTypeName: PR_bool
+"if" |tokenTypeName: PR_if
+"True"|"False" |tokenTypeName: bool_Py
+"true"|"false" |tokenTypeName: bool_CppCj
+"+" |tokenTypeName: Mas
+"-" |tokenTypeName: Menos
+"*" |tokenTypeName: Multiplicacion
+"/" |tokenTypeName: Division
+"<=" |tokenTypeName: Menos_Que_Igual
+"<" |tokenTypeName: Menos_Que
+">=" |tokenTypeName: Mas_Que_Igual
+">" |tokenTypeName: Mas_Que
+"==" |tokenTypeName: Igual_Que_PyCpp
+"(=" |tokenTypeName: Igual_Que_Cj
+"=" |tokenTypeName: Asignacion_PyCpp
+"(" |tokenTypeName: Parentesis_abierto
+")" |tokenTypeName: Parentesis_cerrado
+([0-9]|[1-9]*)+"."[0-9]*(["e"|"E"]("+"|"-")?[0-9]*)? |tokenTypeName: double/float
+[1-9][0-9]* |tokenTypeName: Entero
+[a-zA-Z]("_"|[0-9]|[a-zA-Z])* |tokenTypeName: Variable_PyCpp
+[a-zA-Z]|"_"("_"|[0-9]|[a-zA-Z])* |tokenTypeName: Variable_Cj
+[ \t\n]+ /* nada, no modificar */
+. |tokenTypeName: No_Reconocido
