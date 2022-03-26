@@ -27,7 +27,6 @@
 [1-9][0-9]* {fprintf(yyout, "Entero ");fprintf(yyout, yytext);fprintf(yyout, "\n");}
 [a-zA-Z]("_"|[0-9]|[a-zA-Z])* {fprintf(yyout, "Variable_PyCpp ");fprintf(yyout, yytext);fprintf(yyout, "\n");}
 [a-zA-Z]|"_"("_"|[0-9]|[a-zA-Z])* {fprintf(yyout, "Variable_Cj ");fprintf(yyout, yytext);fprintf(yyout, "\n");}
-[ \t\n]+ /* nada */
 . {fprintf(yyout, "No_Reconocido ");fprintf(yyout, yytext);fprintf(yyout, "\n");}
 %%
 int yywrap(void){
