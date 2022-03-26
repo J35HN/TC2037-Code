@@ -64,10 +64,13 @@ void createCompilerCpp(){
     myFile << "yyin = fopen(\"inputText.txt\", \"r\");\n\t";
     myFile << "yyout = fopen(\"outputTokens.txt\", \"w\");\n\t";
     myFile << "yylex();\n\treturn 0;\n}";
+    myFile.close();
 }
 
 int main(){
-    createFlexFile("inputRegex.txt");
-    createCompilerCpp();
+    //createFlexFile("inputRegex.txt");
+    //createCompilerCpp();
+    char cmd[10] = "date";
+    system(cmd);
     return 0;
 }
