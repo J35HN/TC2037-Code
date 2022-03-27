@@ -12,6 +12,8 @@ Date of creation and last modification:
 #include <stdlib.h>
 #include <stdio.h>
 #include <vector>
+#include <cstring>
+#include <windows.h>
 // Global variables
 std::vector<std::string> regExpressions;
 std::vector<std::string> tokensTypeName;
@@ -80,7 +82,7 @@ void createCompilerCpp(std::string outputFile, std::string outputTxt, std::strin
  * @return true 
  * @return false 
  */
-bool filesCreated(std::string file_flex, std::string file_cpp){
+bool ifFiles_FlexAndCompilerExist(std::string file_flex, std::string file_cpp){
     std::ifstream fileFlx;
     std::ifstream fileComp;
     fileFlx.open(file_flex);
@@ -91,6 +93,56 @@ bool filesCreated(std::string file_flex, std::string file_cpp){
         return true;
     }
     return false;
+}
+/**
+ * @brief Validates if C file is created by the Flex file.
+ * 
+ * @param cFile file that should be created.
+ * @return true 
+ * @return false 
+ */
+bool ifFile_cExist(std::string cFile){
+    std::ifstream file;
+    file.open(cFile);
+    if (file){
+        file.close();
+        return true;
+    }
+    return false;
+}
+/**
+ * @brief System command to compile flex file.
+ * 
+ * @param flexFile flex file to compile.
+ */
+void compileFlexFile(std::string flexFile){
+    char command[100];
+    strcpy(command, "flex ");
+    strcat(command, flexFile.c_str());
+    // Compile Flex file.
+    system(command);
+}
+/**
+ * @brief System command to compile lex.yy.c file.
+ * 
+ * @param cFile c file to compile.
+ */
+void compileCFile(std::string cFile){
+    char command[100];
+    strcpy(command, "g++ main3p3.cpp ");
+    strcat(command, cFile.c_str());
+    strcat(command, " -o runForOutput");
+    system(command);
+}
+/**
+ * @brief Opens temp.exe file created by compiling our compiler.cpp
+ * 
+ */
+void open_tempFile(){
+    char command[100];
+    strcpy(command, "runForOutput.exe");
+    Sleep(500);
+    system(command);
 }
 int main(){
     // Definitions of files.
@@ -103,12 +155,18 @@ int main(){
     createFlexFile(file_InputRegEx, file_regExMotor);
     createCompilerCpp(file_Compiler, file_tokensOutput, file_InputText);
     // Check if both files are created. If they do, continue with the execution of the program.
-    if (filesCreated(file_regExMotor, file_Compiler)){
-        std::cout << "Both Exist";
+    if (ifFiles_FlexAndCompilerExist(file_regExMotor, file_Compiler)){
+        compileFlexFile(file_regExMotor);
+        // Check if C file exist.
+        if (ifFile_cExist("lex.yy.c")){
+            compileCFile("lex.yy.c");
+            open_tempFile();
+        } else {
+            std::cout << "Can not continue to execute the program, lex.yy.c file not created" << std::endl;
+        }
     } else {
         std::cout << "Can not continue to execute the program, flex file or compiler file does not exist" << std::endl;
     }
-    //char cmd[10] = "date";
-    //system(cmd);
+
     return 0;
 }
