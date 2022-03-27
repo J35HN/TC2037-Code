@@ -126,10 +126,13 @@ void compileFlexFile(std::string flexFile){
  * @brief System command to compile lex.yy.c file.
  * 
  * @param cFile c file to compile.
+ * @param compiler file to compile with our cFile.
  */
-void compileCFile(std::string cFile){
+void compileCFile(std::string cFile, std::string compiler){
     char command[100];
-    strcpy(command, "g++ main3p3.cpp ");
+    strcpy(command, "g++ ");
+    strcat(command, compiler.c_str());
+    strcat(command, " ");
     strcat(command, cFile.c_str());
     strcat(command, " -o runForOutput");
     system(command);
@@ -141,7 +144,6 @@ void compileCFile(std::string cFile){
 void open_tempFile(){
     char command[100];
     strcpy(command, "runForOutput.exe");
-    Sleep(500);
     system(command);
 }
 int main(){
@@ -159,7 +161,7 @@ int main(){
         compileFlexFile(file_regExMotor);
         // Check if C file exist.
         if (ifFile_cExist("lex.yy.c")){
-            compileCFile("lex.yy.c");
+            compileCFile("lex.yy.c", file_Compiler);
             open_tempFile();
         } else {
             std::cout << "Can not continue to execute the program, lex.yy.c file not created" << std::endl;
