@@ -15,8 +15,9 @@ Date of creation and last modification:
 #include <cstring>
 #include <windows.h>
 // Global variables
-std::vector<std::string> regExpressions;
+int nTokenType = 25;
 std::vector<std::string> tokensTypeName;
+std::vector<std::string> colors{"red", "fuchsia", "yellow", "blue", "aqua", "lime", "teal", "aliceblue", "brown", "bisque", "cyan", "darkorange", "deeppink", "peru", "plum", "springgreen", "tomato", "tan", "yellowgreen", "skyblue", "salmon", "pink", "palegreen", "magenta", "white"};
 /**
  * @brief Creates a Flex File that is our reg-ex motor.
  * 
@@ -45,7 +46,7 @@ void createFlexFile(std::string inputRegex, std::string outputFile){
         if (middlePointLine != 0){ // In case there was no ":" to avoid errors.
             reg_ex = line.substr(0, middlePointLine - 1);
             tokenType = line.substr(middlePointLine + 2, line.length()-1);
-            //std::cout << re_gex << " {fprintf(yyout, \"" << tokenType << " \");fprintf(yyout, yytext);fprintf(yyout, \"\\n\");}" << std::endl;
+            tokensTypeName.push_back(tokenType);
             myFile << reg_ex << " {fprintf(yyout, \"" << tokenType << " \");fprintf(yyout, yytext);fprintf(yyout, \"\\n\");}" << "\n";
         }
     }
@@ -68,7 +69,6 @@ void createCompilerCpp(std::string outputFile, std::string outputTxt, std::strin
     myFile << "extern int yylex();\nextern int yylineno;\nextern char* yytext;\n\n";
     myFile << "int main(){\n\textern FILE *yyin, *yyout;\n\t";
     myFile << "yyin = fopen(\"" << inputTxt << "\", \"r\");\n\t";
-    //myFile << "yyin = fopen(\"inputText.txt\", \"r\");\n\t";
     myFile << "yyout = fopen(\"" << outputTxt << "\", \"w\");\n\t";
     //myFile << "yyout = fopen(\"outputTokens.txt\", \"w\");\n\t";
     myFile << "yylex();\n\treturn 0;\n}";
@@ -146,6 +146,56 @@ void open_tempFile(){
     strcpy(command, "runForOutput.exe");
     system(command);
 }
+void createHTML(std::string inputFileTxt){
+    int middlePointLine = 0;
+    std::string line;
+    std::string token;
+    std::string tokenType;
+    std::string paragraph = "<p>";
+    // Create and open file syntaxHi.html
+    std::ofstream myFile("syntaxHi.html");
+    // Insert all neccesary info. from our outputTokenFile.
+    myFile << "<!DOCTYPE html>";
+    myFile << "<html>\n";
+    myFile << "<head>\n\t<title> Syntax Highlighter by Jesh</title>\n";
+    myFile << "\t<style type=\"text/css\">\n";
+    myFile << "\t\tbody{background-color: #121224; color: #ffffff; font-family: Tahoma, Geneva, sans-serif; width:98%; margin: auto;}\n";
+    myFile << "\t\tp{width: 95%; margin: auto; font-size:20px;}\n";
+    myFile << "\t</style>\n";
+    myFile << "</head>\n";
+    myFile << "<body>\n";
+    myFile << "\t<h1> Syntax Highlighter </h1>\n\t<h2> by Jeshua Nava Avila | A01639282 </h2>\n";
+    myFile << "\t<div>\n";
+    // Read  inputFileTxt.
+    std::ifstream txtFile (inputFileTxt.c_str());
+    while (getline(txtFile, line)){
+        // If line is empty, we add our current paragraph, if not, we keep appending.
+        if(line == ""){
+            paragraph = paragraph + "</p>";
+            myFile << paragraph;
+            paragraph = "<p>"; // reset paragraph.
+        } else {
+            // Identify our token and out type of token. So we traverse our line and spot a space char.
+            for (int i = 0; i < line.length(); i++){
+                if (line[i] == ' '){
+                    middlePointLine = i;
+                break;
+                }
+            }
+            // Define our token and tokenType.
+            if (middlePointLine != 0){
+                tokenType = line.substr(0 , middlePointLine - 1);
+                token = line.substr(middlePointLine + 1, line.length() - 1);
+            }
+            paragraph = paragraph + token;
+        }
+    }
+    myFile << "\t\t<p>hola concha de sus madres</p>\n";
+    myFile << "\t</div>\n";
+    myFile << "</body>\n";
+    myFile << "</html>";
+    myFile.close();
+}
 int main(){
     // Definitions of files.
     std::string file_InputText = "inputText.txt";
@@ -153,6 +203,7 @@ int main(){
     std::string file_regExMotor = "exprMotor1.l";
     std::string file_Compiler = "compiler1.cpp";
     std::string file_tokensOutput = "outputTokens.txt";
+    
     // Creation of the Flex file and the Compiler file.
     createFlexFile(file_InputRegEx, file_regExMotor);
     createCompilerCpp(file_Compiler, file_tokensOutput, file_InputText);
@@ -169,6 +220,6 @@ int main(){
     } else {
         std::cout << "Can not continue to execute the program, flex file or compiler file does not exist" << std::endl;
     }
-
+    createHTML(file_tokensOutput);
     return 0;
 }
