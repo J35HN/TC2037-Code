@@ -2,7 +2,7 @@ int float string bool if true True false False
 +-*/<=<>=> ==(==()
 2.4e12
 2314123 4324 
-int caca = 123;
+int var = 123;
 string _soyVariableClojure
 ---.
 .dasjdfoia fjpsq

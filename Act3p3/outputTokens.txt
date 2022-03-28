@@ -40,7 +40,7 @@ validChar
 
 PR_int int
 validChar  
-Variable_PyCpp caca
+Variable_PyCpp var
 validChar  
 Assignation_PyCpp =
 validChar  
@@ -49,7 +49,7 @@ validChar ;
 
 PR_string string
 validChar  
-Variable_Cj _tuPuta_madre121
+Variable_Cj _soyVariableClojure
 
 Minus -
 Minus -

@@ -72,7 +72,6 @@ void createCompilerCpp(std::string outputFile, std::string outputTxt, std::strin
     myFile << "int main(){\n\textern FILE *yyin, *yyout;\n\t";
     myFile << "yyin = fopen(\"" << inputTxt << "\", \"r\");\n\t";
     myFile << "yyout = fopen(\"" << outputTxt << "\", \"w\");\n\t";
-    //myFile << "yyout = fopen(\"outputTokens.txt\", \"w\");\n\t";
     myFile << "yylex();\n\treturn 0;\n}";
     myFile.close();
 }
@@ -148,6 +147,11 @@ void open_tempFile(){
     strcpy(command, "runForOutput.exe");
     system(command);
 }
+/**
+ * @brief Creates our HTML + CSS file.
+ * 
+ * @param inputFileTxt the input text for our syntax highlighter.
+ */
 void createHTML(std::string inputFileTxt){
     int middlePointLine = 0;
     std::string line;
@@ -214,7 +218,6 @@ int main(){
     std::string file_tokensOutput = "outputTokens.txt";
     std::string tokenType;
     std::string color;
-    
     // Creation of the Flex file and the Compiler file.
     createFlexFile(file_InputRegEx, file_regExMotor);
     createCompilerCpp(file_Compiler, file_tokensOutput, file_InputText);
