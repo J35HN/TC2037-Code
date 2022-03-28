@@ -14,10 +14,12 @@ Date of creation and last modification:
 #include <vector>
 #include <cstring>
 #include <windows.h>
+#include <unordered_map>
 // Global variables
-int nTokenType = 25;
+int nTokenTypes = 25; // Modify to according number of token types (add or delete number of colors [CSS] to match this number).
 std::vector<std::string> tokensTypeName;
 std::vector<std::string> colors{"red", "fuchsia", "yellow", "blue", "aqua", "lime", "teal", "aliceblue", "brown", "bisque", "cyan", "darkorange", "deeppink", "peru", "plum", "springgreen", "tomato", "tan", "yellowgreen", "skyblue", "salmon", "pink", "palegreen", "magenta", "white"};
+std::unordered_map<std::string, std::string> tokenTypeAndColor; 
 /**
  * @brief Creates a Flex File that is our reg-ex motor.
  * 
@@ -151,7 +153,8 @@ void createHTML(std::string inputFileTxt){
     std::string line;
     std::string token;
     std::string tokenType;
-    std::string paragraph = "<p>";
+    std::string paragraph = "\t\t<p>";
+    std::string formatP = "<span ";
     // Create and open file syntaxHi.html
     std::ofstream myFile("syntaxHi.html");
     // Insert all neccesary info. from our outputTokenFile.
@@ -171,9 +174,9 @@ void createHTML(std::string inputFileTxt){
     while (getline(txtFile, line)){
         // If line is empty, we add our current paragraph, if not, we keep appending.
         if(line == ""){
-            paragraph = paragraph + "</p>";
+            paragraph = paragraph + "</p>\n";
             myFile << paragraph;
-            paragraph = "<p>"; // reset paragraph.
+            paragraph = "\t\t<p>"; // reset paragraph.
         } else {
             // Identify our token and out type of token. So we traverse our line and spot a space char.
             for (int i = 0; i < line.length(); i++){
@@ -184,13 +187,19 @@ void createHTML(std::string inputFileTxt){
             }
             // Define our token and tokenType.
             if (middlePointLine != 0){
-                tokenType = line.substr(0 , middlePointLine - 1);
+                tokenType = line.substr(0 , middlePointLine);
                 token = line.substr(middlePointLine + 1, line.length() - 1);
+                formatP = formatP + "style=\"color: " + tokenTypeAndColor[tokenType] + "\">" + token + "</span>"; // Format our token to its color.
             }
-            paragraph = paragraph + token;
+            paragraph = paragraph + formatP;
+            formatP = "<span ";
         }
     }
-    myFile << "\t\t<p>hola concha de sus madres</p>\n";
+    // Append if paragaph has info.
+    if (paragraph != "\t\t<p>"){
+        myFile << paragraph;
+        paragraph = "";
+    }
     myFile << "\t</div>\n";
     myFile << "</body>\n";
     myFile << "</html>";
@@ -203,6 +212,8 @@ int main(){
     std::string file_regExMotor = "exprMotor1.l";
     std::string file_Compiler = "compiler1.cpp";
     std::string file_tokensOutput = "outputTokens.txt";
+    std::string tokenType;
+    std::string color;
     
     // Creation of the Flex file and the Compiler file.
     createFlexFile(file_InputRegEx, file_regExMotor);
@@ -214,12 +225,18 @@ int main(){
         if (ifFile_cExist("lex.yy.c")){
             compileCFile("lex.yy.c", file_Compiler);
             open_tempFile();
+            // Assign a color to a token type.
+            for (int i = 0; i < nTokenTypes; i++){
+                color = colors[i];
+                tokenType = tokensTypeName[i];
+                tokenTypeAndColor[tokenType] = color;
+            }
+            createHTML(file_tokensOutput);
         } else {
             std::cout << "Can not continue to execute the program, lex.yy.c file not created" << std::endl;
         }
     } else {
         std::cout << "Can not continue to execute the program, flex file or compiler file does not exist" << std::endl;
     }
-    createHTML(file_tokensOutput);
     return 0;
 }
