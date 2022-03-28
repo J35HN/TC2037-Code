@@ -3,7 +3,7 @@ int float string bool if true True false False
 2.4e12
 2314123 4324 
 int caca = 123;
-string _tuPuta_madre121
+string _soyVariableClojure
 ---.
 .dasjdfoia fjpsq
 ew rw-q.r,qwé
