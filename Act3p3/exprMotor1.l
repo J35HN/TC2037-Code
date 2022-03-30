@@ -8,8 +8,8 @@
 "string" {fprintf(yyout, "PR_string ");fprintf(yyout, yytext);fprintf(yyout, "\n");}
 "bool" {fprintf(yyout, "PR_bool ");fprintf(yyout, yytext);fprintf(yyout, "\n");}
 "if" {fprintf(yyout, "PR_if ");fprintf(yyout, yytext);fprintf(yyout, "\n");}
-"True"|"False" {fprintf(yyout, "bool_Py ");fprintf(yyout, yytext);fprintf(yyout, "\n");}
-"true"|"false" {fprintf(yyout, "bool_CppCj ");fprintf(yyout, yytext);fprintf(yyout, "\n");}
+"True"|"False" {fprintf(yyout, "PR_bool_Py ");fprintf(yyout, yytext);fprintf(yyout, "\n");}
+"true"|"false" {fprintf(yyout, "PR_bool_CppCj ");fprintf(yyout, yytext);fprintf(yyout, "\n");}
 "+" {fprintf(yyout, "Plus ");fprintf(yyout, yytext);fprintf(yyout, "\n");}
 "-" {fprintf(yyout, "Minus ");fprintf(yyout, yytext);fprintf(yyout, "\n");}
 "*" {fprintf(yyout, "Multiplicacion ");fprintf(yyout, yytext);fprintf(yyout, "\n");}

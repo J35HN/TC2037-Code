@@ -5,7 +5,7 @@ Author:
 - Jeshua Nava Avila | A01639282
 Date of creation and last modification:
 - 03/23/2022
-- 03/XX/2022
+- 03/29/2022
 */
 #include <iostream>
 #include <fstream>
@@ -18,7 +18,7 @@ Date of creation and last modification:
 // Global variables
 int nTokenTypes = 25; // Modify to according number of token types (add or delete number of colors [CSS] to match this number).
 std::vector<std::string> tokensTypeName;
-std::vector<std::string> colors{"red", "fuchsia", "yellow", "blue", "aqua", "lime", "teal", "aliceblue", "brown", "bisque", "cyan", "darkorange", "deeppink", "peru", "plum", "springgreen", "tomato", "tan", "yellowgreen", "skyblue", "salmon", "pink", "palegreen", "magenta", "white"};
+std::vector<std::string> colors{"red", "fuchsia", "yellow", "blue", "aqua", "lime", "teal", "aliceblue", "brown", "bisque", "cyan", "darkorange", "deeppink", "peru", "plum", "springgreen", "tomato", "tan", "yellowgreen", "skyblue", "salmon", "pink", "gold", "magenta", "white"};
 std::unordered_map<std::string, std::string> tokenTypeAndColor; 
 /**
  * @brief Creates a Flex File that is our reg-ex motor.
@@ -166,7 +166,7 @@ void createHTML(std::string inputFileTxt){
     myFile << "<html>\n";
     myFile << "<head>\n\t<title> Syntax Highlighter by Jesh</title>\n";
     myFile << "\t<style type=\"text/css\">\n";
-    myFile << "\t\tbody{background-color: #121224; color: #ffffff; font-family: Tahoma, Geneva, sans-serif; width:98%; margin: auto;}\n";
+    myFile << "\t\tbody{background-color: #000000; color: #ffffff; font-family: Tahoma, Geneva, sans-serif; width:98%; margin: auto;}\n";
     myFile << "\t\tp{width: 95%; margin: auto; font-size:20px;}\n";
     myFile << "\t</style>\n";
     myFile << "</head>\n";

@@ -3,8 +3,8 @@
 "string" : PR_string
 "bool" : PR_bool
 "if" : PR_if
-"True"|"False" : bool_Py
-"true"|"false" : bool_CppCj
+"True"|"False" : PR_bool_Py
+"true"|"false" : PR_bool_CppCj
 "+" : Plus
 "-" : Minus
 "*" : Multiplicacion

@@ -676,12 +676,12 @@ YY_RULE_SETUP
 case 6:
 YY_RULE_SETUP
 #line 11 "exprMotor1.l"
-{fprintf(yyout, "bool_Py ");fprintf(yyout, yytext);fprintf(yyout, "\n");}
+{fprintf(yyout, "PR_bool_Py ");fprintf(yyout, yytext);fprintf(yyout, "\n");}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 12 "exprMotor1.l"
-{fprintf(yyout, "bool_CppCj ");fprintf(yyout, yytext);fprintf(yyout, "\n");}
+{fprintf(yyout, "PR_bool_CppCj ");fprintf(yyout, yytext);fprintf(yyout, "\n");}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
