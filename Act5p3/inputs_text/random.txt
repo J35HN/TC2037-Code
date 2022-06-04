@@ -1,0 +1,24 @@
+// equality
+2 === 3
+
+// inequality
+2 !== 3
+
+// approximately equal
+almostEqual(Math.PI, 3.14159, 1e-5)
+
+function almostEqual(a, b, epsilon) {
+  return Math.abs(a - b) <= epsilon
+}
+var x = 2 * k * j
+var math = require('mathjs')
+
+var a = math.complex(3, -1)
+//=> { re: 3, im: -1 }
+
+var b = math.sqrt(-1)
+//=> { re: 0, im: 1 }
+
+console.log(math.multiply(a, b).toString())
+//=> '1 + 3i'
+var result = 3 * k * j

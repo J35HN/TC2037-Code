@@ -1,0 +1,53 @@
+"hello"         ; string
+\e              ; character
+#"[0-9]+"       ; regular expression
+map             ; symbol
++               ; symbol - most punctuation allowed
+clojure.core/+  ; namespaced symbol
+nil             ; null value
+true false      ; booleans
+:alpha          ; keyword
+:release/alpha  ; keyword with namespace
+42        ; integer
+-1.5      ; floating point
+22/7      ; ratio
+'(1 2 3)     ; list
+[1 2 3]      ; vector
+#{1 2 3}     ; set
+{:a 1, :b 2} ; map
+user=> '(1 2 3)
+(1 2 3)
+user=> (doc +)
+
+clojure.core/+
+([] [x] [x y] [x y & more])
+  Returns the sum of nums. (+) returns 0. Does not auto-promote
+  longs, will throw on overflow. See also: +'
+user=> (find-doc "trim")
+
+clojure.core/subvec
+([v start] [v start end])
+  Returns a persistent vector of the items in vector from
+  start (inclusive) to end (exclusive).  If end is not supplied,
+  defaults to (count vector). This operation is O(1) and very fast, as
+  the resulting vector shares structure with the original and no
+  trimming is done.
+
+clojure.string/trim
+([s])
+  Removes whitespace from both ends of string.
+
+clojure.string/trim-newline
+([s])
+  Removes all trailing newline \n or return \r characters from
+  string.  Similar to Perl's chomp.
+
+clojure.string/triml
+([s])
+  Removes whitespace from the left side of string.
+
+clojure.string/trimr
+([s])
+  Removes whitespace from the right side of string.
+  user=> (def x 7)
+#'user/x

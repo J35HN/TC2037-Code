@@ -1,0 +1,52 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class FloorGenerator : MonoBehaviour
+{
+    [SerializeField] private GameObject _floor1;
+    [SerializeField] private GameObject _floor2;
+    [SerializeField] private GameObject _floor3;
+    [SerializeField] private GameObject _floor4;
+    [SerializeField] private GameObject _floor5;
+    private float _yPos;
+    private GameObject _floorToSpawn;
+    private GameObject[] _floors;
+    private float _time;
+    private bool _enableSpawn = true;
+
+    void Start(){
+        _floors = new GameObject[]{_floor1, _floor2, _floor3, _floor4, _floor5};
+        StartCoroutine(SpawnerRoutine());
+    }
+
+    IEnumerator SpawnerRoutine(){
+        while(_enableSpawn){
+            _time = Random.Range(0.4f, 1.1f);
+            _floorToSpawn = _floors[Random.Range(0, 5)];
+            _yPos = Random.Range(-0.2f, 0.2f);
+            Vector3 _spawnPosition = new Vector3(transform.position.x, transform.position.y + _yPos, 0);
+            yield return new WaitForSeconds(_time);
+            GameObject clone = Instantiate(_floorToSpawn, _spawnPosition, Quaternion.identity);
+        }
+    }
+
+}
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using TMPro;
+
+public class ColisionCoin : MonoBehaviour
+{
+    [SerializeField] private TMP_Text _coinsCollected;
+    private int _score;
+
+    void OnTriggerEnter2D(Collider2D _colidedObject){
+        if(_colidedObject.gameObject.tag == "Coin"){
+            _score++;
+            _coinsCollected.SetText("Coins: " + _score);
+            Destroy(_colidedObject.gameObject);
+        }
+    }
+}
