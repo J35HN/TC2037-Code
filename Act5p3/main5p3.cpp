@@ -1,11 +1,11 @@
 /*
-Activity 3.3 - Syntax Highlighter
+Activity 5.3 - Syntax Highlighter Sequential
 - Programing a basic syntax highlighter using Flex and HTML.
 Author:
 - Jeshua Nava Avila | A01639282
 Date of creation and last modification:
 - 03/23/2022
-- 06/XX/2022
+- 06/04/2022
 */
 #include <iostream>
 #include <fstream>
@@ -277,27 +277,5 @@ int main(){
             std::cout << "Can not continue to execute the program, flex file or compiler file does not exist" << std::endl;
             }
     }
-    /*
-    // Check if both files are created. If they do, continue with the execution of the program.
-    if (ifFiles_FlexAndCompilerExist(file_regExMotor, file_Compiler)){
-        compileFlexFile(file_regExMotor);
-        // Check if C file exist.
-        if (ifFile_cExist("lex.yy.c")){
-            compileCFile("lex.yy.c", file_Compiler);
-            open_tempFile();
-            // Assign a color to a token type.
-            for (int i = 0; i < nTokenTypes; i++){
-                color = colors[i];
-                tokenType = tokensTypeName[i];
-                tokenTypeAndColor[tokenType] = color;
-            }
-            createHTML(file_tokensOutput);
-        } else {
-            std::cout << "Can not continue to execute the program, lex.yy.c file not created" << std::endl;
-        }
-    } else {
-        std::cout << "Can not continue to execute the program, flex file or compiler file does not exist" << std::endl;
-    }
-    */
     return 0;
 }
