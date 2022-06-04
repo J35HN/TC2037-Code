@@ -5,7 +5,7 @@ Author:
 - Jeshua Nava Avila | A01639282
 Date of creation and last modification:
 - 03/23/2022
-- 03/29/2022
+- 06/XX/2022
 */
 #include <iostream>
 #include <fstream>
@@ -15,6 +15,8 @@ Date of creation and last modification:
 #include <cstring>
 #include <windows.h>
 #include <unordered_map>
+#include <sys/types.h>
+#include <dirent.h>
 // Global variables
 int nTokenTypes = 25; // Modify to according number of token types (add or delete number of colors [CSS] to match this number).
 std::vector<std::string> tokensTypeName;
@@ -211,6 +213,35 @@ void createHTML(std::string inputFileTxt){
 }
 int main(){
     // Definitions of files.
+    // Read amount of files in directory "inputs_text".
+    int counter = 0;
+    struct dirent *d;
+    DIR *dr;
+    dr = opendir("./inputs_text");
+    if(dr!=NULL){
+        std::cout << "Files found!" << std::endl;
+        for(d=readdir(dr); d!=NULL; d=readdir(dr)){
+            std::cout << d->d_name<<std::endl;
+        }
+        closedir(dr);
+    } else 
+        std::cout << "\nError Ocurred!";
+        std::cout << std::endl;
+    /*
+    DIR *dp;
+    struct dirent *ep;
+    dp = opendir ("./inputs_text");
+    if (dp != NULL){
+        while (ep = readdir (dp))
+            counter++;
+        (void) closedir (dp);
+    }
+    else
+        perror ("aa ");
+        printf("bb ");
+    std::cout << counter << std::endl;
+    */
+    /*
     std::string file_InputText = "inputText.txt";
     std::string file_InputRegEx = "inputRegex.txt";
     std::string file_regExMotor = "exprMotor1.l";
@@ -241,5 +272,6 @@ int main(){
     } else {
         std::cout << "Can not continue to execute the program, flex file or compiler file does not exist" << std::endl;
     }
+    */
     return 0;
 }
