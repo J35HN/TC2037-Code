@@ -225,7 +225,7 @@ void createHTML(std::string inputFileTxt){
     dr = opendir(c);
     if (dr != NULL){
         for (d = readdir(dr); d != NULL; d = readdir(dr)){
-            inputFiles.push_back(d -> d_name); // Insert to vector the name of the files.
+            inputFiles.push_back(path + "/" + d -> d_name); // Insert to vector the name of the files.
         }
         closedir(dr);
     } else 
@@ -240,17 +240,33 @@ int main(){
     std::string file_InputText = "inputText.txt";
     std::string file_InputRegEx = "inputRegex.txt";
     std::string file_regExMotor = "exprMotor1.l";
-    std::string file_Compiler = "compiler1.cpp";
+    std::string file_compiler = ".";
     std::string file_tokensOutput = "outputTokens.txt";
     std::string directory_inputTexts = "./inputs_text";
     std::string tokenType;
     std::string color;
     // Read amount of files in directory "inputs_text".
     readAmountInputFiles(directory_inputTexts);
-    /*
     // Creation of the Flex file and the Compiler file.
     createFlexFile(file_InputRegEx, file_regExMotor);
-    createCompilerCpp(file_Compiler, file_tokensOutput, file_InputText);
+    // Sequentially, analyze each input file.
+    for (int i = 0; i < inputFiles.size(); i++){
+        file_compiler = "compiler" + std::to_string(i) + ".cpp";
+        createCompilerCpp(file_compiler, file_tokensOutput, inputFiles[i]);
+        // Check if flex file and compiler are created.
+        if (ifFiles_FlexAndCompilerExist(file_regExMotor, file_compiler)){
+            compileFlexFile(file_regExMotor);
+            // Check if C file exist.
+            if (ifFile_cExist("lex.yy.c")){
+                std::cout << "c file exist" << std::endl;
+            } else {
+                std::cout << "Can not continue to execute the program, lex.yy.c file not created" << std::endl;
+            }
+        } else {
+            std::cout << "Can not continue to execute the program, flex file or compiler file does not exist" << std::endl;
+            }
+    }
+    /*
     // Check if both files are created. If they do, continue with the execution of the program.
     if (ifFiles_FlexAndCompilerExist(file_regExMotor, file_Compiler)){
         compileFlexFile(file_regExMotor);
