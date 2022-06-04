@@ -241,7 +241,7 @@ int main(){
     std::string file_InputText = "inputText.txt";
     std::string file_InputRegEx = "inputRegex.txt";
     std::string file_regExMotor = "exprMotor1.l";
-    std::string file_compiler = ".";
+    std::string file_compiler = "compiler.cpp";
     std::string file_tokensOutput = "outputTokens.txt";
     std::string directory_inputTexts = "./inputs_text";
     std::string tokenType;
@@ -253,7 +253,7 @@ int main(){
     createFlexFile(file_InputRegEx, file_regExMotor);
     // Sequentially, analyze each input file.
     for (int i = 0; i < inputFiles.size(); i++){
-        file_compiler = "compiler" + std::to_string(i) + ".cpp";
+        //file_compiler = "compiler" + std::to_string(i) + ".cpp";
         htmlName = "SyntaxHi" + std::to_string(i);
         createCompilerCpp(file_compiler, file_tokensOutput, inputFiles[i]);
         // Check if flex file and compiler are created.
