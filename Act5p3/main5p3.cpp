@@ -4,7 +4,7 @@ Activity 5.3 - Syntax Highlighter Sequential
 Author:
 - Jeshua Nava Avila | A01639282
 Date of creation and last modification:
-- 03/23/2022
+- 06/02/2022
 - 06/04/2022
 */
 #include <iostream>
@@ -17,6 +17,8 @@ Date of creation and last modification:
 #include <unordered_map>
 #include <sys/types.h>
 #include <dirent.h>
+#include <chrono>
+using namespace std::chrono;
 // Global variables
 int nTokenTypes = 25; // Modify to according number of token types (add or delete number of colors [CSS] to match this number).
 std::vector<std::string> tokensTypeName;
@@ -237,6 +239,8 @@ void createHTML(std::string inputFileTxt, std::string name){
  }
 
 int main(){
+    // Measure Time.
+    auto start = high_resolution_clock::now();
     // Definitions of files and paths.
     std::string file_InputText = "inputText.txt";
     std::string file_InputRegEx = "inputRegex.txt";
@@ -277,5 +281,9 @@ int main(){
             std::cout << "Can not continue to execute the program, flex file or compiler file does not exist" << std::endl;
             }
     }
+    //calculate time
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(stop - start);
+    std::cout << "Time taken by program: " << duration.count() << " microseconds" << std::endl;
     return 0;
 }
