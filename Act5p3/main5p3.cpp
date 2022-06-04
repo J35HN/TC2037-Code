@@ -22,6 +22,7 @@ int nTokenTypes = 25; // Modify to according number of token types (add or delet
 std::vector<std::string> tokensTypeName;
 std::vector<std::string> colors{"red", "fuchsia", "yellow", "blue", "aqua", "lime", "teal", "aliceblue", "brown", "bisque", "cyan", "darkorange", "deeppink", "peru", "plum", "springgreen", "tomato", "tan", "yellowgreen", "skyblue", "salmon", "pink", "gold", "magenta", "white"};
 std::unordered_map<std::string, std::string> tokenTypeAndColor; 
+std::vector<std::string> inputFiles;
 /**
  * @brief Creates a Flex File that is our reg-ex motor.
  * 
@@ -211,44 +212,42 @@ void createHTML(std::string inputFileTxt){
     myFile << "</html>";
     myFile.close();
 }
-int main(){
-    // Definitions of files.
-    // Read amount of files in directory "inputs_text".
-    int counter = 0;
+/**
+ * @brief Inserts to vector "inputFiles" the names of the inputs files in the input directory.
+ * 
+ * @param path the path to our input directory.
+ */
+ void readAmountInputFiles(std::string path){
+    const char *c = path.c_str(); // Convert string to const char*.
+    // Read names of files from directory (no explanation, code is from internet).
     struct dirent *d;
     DIR *dr;
-    dr = opendir("./inputs_text");
-    if(dr!=NULL){
-        std::cout << "Files found!" << std::endl;
-        for(d=readdir(dr); d!=NULL; d=readdir(dr)){
-            std::cout << d->d_name<<std::endl;
+    dr = opendir(c);
+    if (dr != NULL){
+        for (d = readdir(dr); d != NULL; d = readdir(dr)){
+            inputFiles.push_back(d -> d_name); // Insert to vector the name of the files.
         }
         closedir(dr);
     } else 
-        std::cout << "\nError Ocurred!";
-        std::cout << std::endl;
-    /*
-    DIR *dp;
-    struct dirent *ep;
-    dp = opendir ("./inputs_text");
-    if (dp != NULL){
-        while (ep = readdir (dp))
-            counter++;
-        (void) closedir (dp);
-    }
-    else
-        perror ("aa ");
-        printf("bb ");
-    std::cout << counter << std::endl;
-    */
-    /*
+        // In case an error occurs, indicate it.
+        std::cout << "\nError Occurred, couldn't read or open input files directory!\n";
+    // Delete objects "." and ".." from vector; they are the first and second index.
+    inputFiles.erase(inputFiles.begin(), inputFiles.begin()+2);
+ }
+
+int main(){
+    // Definitions of files and paths.
     std::string file_InputText = "inputText.txt";
     std::string file_InputRegEx = "inputRegex.txt";
     std::string file_regExMotor = "exprMotor1.l";
     std::string file_Compiler = "compiler1.cpp";
     std::string file_tokensOutput = "outputTokens.txt";
+    std::string directory_inputTexts = "./inputs_text";
     std::string tokenType;
     std::string color;
+    // Read amount of files in directory "inputs_text".
+    readAmountInputFiles(directory_inputTexts);
+    /*
     // Creation of the Flex file and the Compiler file.
     createFlexFile(file_InputRegEx, file_regExMotor);
     createCompilerCpp(file_Compiler, file_tokensOutput, file_InputText);
