@@ -1,11 +1,11 @@
 /*
-Activity 5.3 - Syntax Highlighter Sequential
+Activity 5.3 - Syntax Highlighter Parallel.
 - Programing a basic syntax highlighter using Flex and HTML.
 Author:
 - Jeshua Nava Avila | A01639282
 Date of creation and last modification:
-- 06/02/2022
 - 06/04/2022
+- 06/XX/2022
 */
 #include <iostream>
 #include <fstream>

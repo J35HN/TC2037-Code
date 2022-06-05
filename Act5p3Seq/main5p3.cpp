@@ -257,7 +257,6 @@ int main(){
     createFlexFile(file_InputRegEx, file_regExMotor);
     // Sequentially, analyze each input file.
     for (int i = 0; i < inputFiles.size(); i++){
-        //file_compiler = "compiler" + std::to_string(i) + ".cpp";
         htmlName = "SyntaxHi" + std::to_string(i);
         createCompilerCpp(file_compiler, file_tokensOutput, inputFiles[i]);
         // Check if flex file and compiler are created.
