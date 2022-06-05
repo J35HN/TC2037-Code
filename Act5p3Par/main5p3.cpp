@@ -218,9 +218,50 @@ void createHTML(std::string inputFileTxt, std::string name){
     myFile.close();
 }
 
-void threadMain(int numberThread, int filesToAnalyze, bool isLast){
-    std::cout << "\nThread: " << numberThread << ". Files: " << filesToAnalyze << " last? " << isLast << std::endl;
+void threadMain(int numberOfThread, int filesToAnalyze, int step){
+    //std::cout << "\nThread: " << numberOfThread << ". Files: " << filesToAnalyze << " last? " << isLast << std::endl;
+    /*
+    std::string file_compiler = "compiler.cpp";
+    std::string file_tokensOutput = "outputTokens.txt";
 
+    std::string htmlName;
+    */
+
+   /*
+    // Sequentially, analyze each input file.
+    for (int i = 0; i < inputFiles.size(); i++){
+        htmlName = "SyntaxHi" + std::to_string(i);
+        // Creation of the compiler file.
+        createCompilerCpp(file_compiler, file_tokensOutput, inputFiles[i]);
+        // Check if flex file and compiler are created.
+        if (ifFiles_FlexAndCompilerExist(file_regExMotor, file_compiler)){
+            compileFlexFile(file_regExMotor);
+            // Check if C file exist.
+            if (ifFile_cExist("lex.yy.c")){
+                compileCFile("lex.yy.c", file_compiler);
+                open_tempFile();
+                createHTML(file_tokensOutput, htmlName);
+            } else {
+                std::cout << "Can not continue to execute the program, lex.yy.c file not created" << std::endl;
+            }
+        } else {
+            std::cout << "Can not continue to execute the program, flex file or compiler file does not exist" << std::endl;
+            }
+    }
+    */
+
+    // Definitions of starting and ending indexes.
+    int start = numberOfThread * step;
+    int end = 0;
+    if(filesToAnalyze == step){
+        end = start + (step - 1);
+    } else {
+        end = start + (filesToAnalyze - 1);
+    }
+    // Analyze the following indexes:
+    for (int i = start; i <= end; i++){
+        std::cout << "[" << numberOfThread << "]. index: " << i << std::endl;
+    }
 }
 
 /**
@@ -250,13 +291,6 @@ int main(){
     // Measure Time.
     auto start = high_resolution_clock::now();
 
-    /*
-    std::string file_compiler = "compiler.cpp";
-    std::string file_tokensOutput = "outputTokens.txt";
-
-    std::string htmlName;
-    */
-
     // Definitions of files, paths and strings.
     std::string file_InputRegEx = "inputRegex.txt";
     std::string file_regExMotor = "exprMotor.l";
@@ -265,8 +299,8 @@ int main(){
     std::string color;
     bool isLast = false;
     // Define amount of threads. My computer has 12 threads (6 Cores * 2 threads per core). In this case, I will only use 2.
-    // BE SURE THAT THE NUMBER OF THREADS ARE NOT GREATER THAN 12. 
-    int number_threads = 5;
+    // BE SURE THAT THE NUMBER OF THREADS ARE NOT GREATER THAN 12 NOR LESS THAN 1. 
+    int number_threads = 2;
     // Definition of threads, and integers that will help the threads. 
     std::vector<std::thread> myThreads(number_threads);
     int step = 0;
@@ -286,7 +320,7 @@ int main(){
     if (number_threads >= inputFiles.size()){
         // Execute threads.
         for (int i = 0; i < inputFiles.size(); i++){
-            myThreads[i] = std::thread(threadMain, i, step, isLast);
+            myThreads[i] = std::thread(threadMain, i, 1, 1);
         }
         // Wait and stop the threads.
         for (int i = 0; i < inputFiles.size(); i++){
@@ -302,40 +336,16 @@ int main(){
                 dif = inputFiles.size() - (step * number_threads);
                 isLast = true;
             }
-            myThreads[i] = std::thread(threadMain, i, step + dif, isLast);
+            myThreads[i] = std::thread(threadMain, i, step + dif, step);
         }
         // Wait and stop the threads.
         for (int i = 0; i < number_threads; i++){
             myThreads[i].join();
         }
     }
-    
-    /*
-    // Sequentially, analyze each input file.
-    for (int i = 0; i < inputFiles.size(); i++){
-        htmlName = "SyntaxHi" + std::to_string(i);
-        // Creation of the compiler file.
-        createCompilerCpp(file_compiler, file_tokensOutput, inputFiles[i]);
-        // Check if flex file and compiler are created.
-        if (ifFiles_FlexAndCompilerExist(file_regExMotor, file_compiler)){
-            compileFlexFile(file_regExMotor);
-            // Check if C file exist.
-            if (ifFile_cExist("lex.yy.c")){
-                compileCFile("lex.yy.c", file_compiler);
-                open_tempFile();
-                createHTML(file_tokensOutput, htmlName);
-            } else {
-                std::cout << "Can not continue to execute the program, lex.yy.c file not created" << std::endl;
-            }
-        } else {
-            std::cout << "Can not continue to execute the program, flex file or compiler file does not exist" << std::endl;
-            }
-    }
     //calculate time
     auto stop = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(stop - start);
     std::cout << "Time taken by program: " << duration.count() << " microseconds" << std::endl;
-    */
-
     return 0;
 }
