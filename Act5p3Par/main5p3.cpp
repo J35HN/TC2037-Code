@@ -27,6 +27,13 @@ std::vector<std::string> tokensTypeName;
 std::vector<std::string> colors{"red", "fuchsia", "yellow", "blue", "aqua", "lime", "teal", "aliceblue", "brown", "bisque", "cyan", "darkorange", "deeppink", "peru", "plum", "springgreen", "tomato", "tan", "yellowgreen", "skyblue", "salmon", "pink", "gold", "magenta", "white"};
 std::unordered_map<std::string, std::string> tokenTypeAndColor; 
 std::vector<std::string> inputFiles;
+// Definitions of files, paths and strings.
+std::string file_InputRegEx = "inputRegex.txt";
+std::string file_regExMotor = "exprMotor.l";
+std::string directory_inputTexts = "./inputs_text";
+std::string tokenType;
+std::string color;
+
 /**
  * @brief Creates a Flex File that is our reg-ex motor.
  * 
@@ -136,22 +143,26 @@ void compileFlexFile(std::string flexFile){
  * @param cFile c file to compile.
  * @param compiler file to compile with our cFile.
  */
-void compileCFile(std::string cFile, std::string compiler){
+void compileCFile(std::string cFile, std::string compiler, int numberOfThread){
     char command[100];
+    std::string com = " -o runForOutput" + std::to_string(numberOfThread);
+    const char *c = com.c_str();
     strcpy(command, "g++ ");
     strcat(command, compiler.c_str());
     strcat(command, " ");
     strcat(command, cFile.c_str());
-    strcat(command, " -o runForOutput");
+    strcat(command, c);
     system(command);
 }
 /**
  * @brief Opens temp.exe file created by compiling our compiler.cpp
  * 
  */
-void open_tempFile(){
+void open_tempFile(int numberOfThread){
     char command[100];
-    strcpy(command, "runForOutput.exe");
+    std::string com = "runForOutput" + std::to_string(numberOfThread) + ".exe";
+    const char *c = com.c_str();
+    strcpy(command, c);
     system(command);
 }
 /**
@@ -220,12 +231,9 @@ void createHTML(std::string inputFileTxt, std::string name){
 
 void threadMain(int numberOfThread, int filesToAnalyze, int step){
     //std::cout << "\nThread: " << numberOfThread << ". Files: " << filesToAnalyze << " last? " << isLast << std::endl;
-    /*
-    std::string file_compiler = "compiler.cpp";
-    std::string file_tokensOutput = "outputTokens.txt";
-
+    std::string file_compiler = "compiler" + std::to_string(numberOfThread) + ".cpp";
+    std::string file_tokensOutput = "outputTokens" + std::to_string(numberOfThread) + ".txt";
     std::string htmlName;
-    */
 
    /*
     // Sequentially, analyze each input file.
@@ -253,6 +261,7 @@ void threadMain(int numberOfThread, int filesToAnalyze, int step){
     // Definitions of starting and ending indexes.
     int start = numberOfThread * step;
     int end = 0;
+    // Differentiate between the amount of files 
     if(filesToAnalyze == step){
         end = start + (step - 1);
     } else {
@@ -260,7 +269,23 @@ void threadMain(int numberOfThread, int filesToAnalyze, int step){
     }
     // Analyze the following indexes:
     for (int i = start; i <= end; i++){
-        std::cout << "[" << numberOfThread << "]. index: " << i << std::endl;
+        htmlName = "SyntaxHi" + std::to_string(i);
+        // Creation of the compiler file.
+        createCompilerCpp(file_compiler, file_tokensOutput, inputFiles[i]);
+        // Check if flex file and compiler are created.
+        if (ifFiles_FlexAndCompilerExist(file_regExMotor, file_compiler)){
+            compileFlexFile(file_regExMotor);
+            // Check if C file exist.
+            if (ifFile_cExist("lex.yy.c")){
+                compileCFile("lex.yy.c", file_compiler, numberOfThread);
+                open_tempFile(numberOfThread);
+                createHTML(file_tokensOutput, htmlName);
+            } else {
+                std::cout << "Can not continue to execute the program, lex.yy.c file not created" << std::endl;
+            }
+        } else {
+            std::cout << "Can not continue to execute the program, flex file or compiler file does not exist" << std::endl;
+        }
     }
 }
 
@@ -291,13 +316,7 @@ int main(){
     // Measure Time.
     auto start = high_resolution_clock::now();
 
-    // Definitions of files, paths and strings.
-    std::string file_InputRegEx = "inputRegex.txt";
-    std::string file_regExMotor = "exprMotor.l";
-    std::string directory_inputTexts = "./inputs_text";
-    std::string tokenType;
-    std::string color;
-    bool isLast = false;
+
     // Define amount of threads. My computer has 12 threads (6 Cores * 2 threads per core). In this case, I will only use 2.
     // BE SURE THAT THE NUMBER OF THREADS ARE NOT GREATER THAN 12 NOR LESS THAN 1. 
     int number_threads = 2;
@@ -334,7 +353,6 @@ int main(){
             // Add the remaining input files that are no part of a step into the last thread.
             if (i == (number_threads-1)){
                 dif = inputFiles.size() - (step * number_threads);
-                isLast = true;
             }
             myThreads[i] = std::thread(threadMain, i, step + dif, step);
         }

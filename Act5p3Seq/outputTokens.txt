@@ -1,0 +1,659 @@
+Variable_PyCpp using
+validChar  
+Variable_PyCpp System
+double/float .
+Variable_PyCpp Collections
+validChar ;
+
+Variable_PyCpp using
+validChar  
+Variable_PyCpp System
+double/float .
+Variable_PyCpp Collections
+double/float .
+Variable_PyCpp Generic
+validChar ;
+
+Variable_PyCpp using
+validChar  
+Variable_PyCpp UnityEngine
+validChar ;
+
+
+Variable_PyCpp public
+validChar  
+Variable_PyCpp class
+validChar  
+Variable_PyCpp FloorGenerator
+validChar  
+validChar :
+validChar  
+Variable_PyCpp MonoBehaviour
+
+validChar {
+
+validChar  
+validChar  
+validChar  
+validChar  
+validChar [
+Variable_PyCpp SerializeField
+validChar ]
+validChar  
+Variable_PyCpp private
+validChar  
+Variable_PyCpp GameObject
+validChar  
+Variable_Cj _floor1
+validChar ;
+
+validChar  
+validChar  
+validChar  
+validChar  
+validChar [
+Variable_PyCpp SerializeField
+validChar ]
+validChar  
+Variable_PyCpp private
+validChar  
+Variable_PyCpp GameObject
+validChar  
+Variable_Cj _floor2
+validChar ;
+
+validChar  
+validChar  
+validChar  
+validChar  
+validChar [
+Variable_PyCpp SerializeField
+validChar ]
+validChar  
+Variable_PyCpp private
+validChar  
+Variable_PyCpp GameObject
+validChar  
+Variable_Cj _floor3
+validChar ;
+
+validChar  
+validChar  
+validChar  
+validChar  
+validChar [
+Variable_PyCpp SerializeField
+validChar ]
+validChar  
+Variable_PyCpp private
+validChar  
+Variable_PyCpp GameObject
+validChar  
+Variable_Cj _floor4
+validChar ;
+
+validChar  
+validChar  
+validChar  
+validChar  
+validChar [
+Variable_PyCpp SerializeField
+validChar ]
+validChar  
+Variable_PyCpp private
+validChar  
+Variable_PyCpp GameObject
+validChar  
+Variable_Cj _floor5
+validChar ;
+
+validChar  
+validChar  
+validChar  
+validChar  
+Variable_PyCpp private
+validChar  
+PR_float float
+validChar  
+Variable_Cj _yPos
+validChar ;
+
+validChar  
+validChar  
+validChar  
+validChar  
+Variable_PyCpp private
+validChar  
+Variable_PyCpp GameObject
+validChar  
+Variable_Cj _floorToSpawn
+validChar ;
+
+validChar  
+validChar  
+validChar  
+validChar  
+Variable_PyCpp private
+validChar  
+Variable_PyCpp GameObject
+validChar [
+validChar ]
+validChar  
+Variable_Cj _floors
+validChar ;
+
+validChar  
+validChar  
+validChar  
+validChar  
+Variable_PyCpp private
+validChar  
+PR_float float
+validChar  
+Variable_Cj _time
+validChar ;
+
+validChar  
+validChar  
+validChar  
+validChar  
+Variable_PyCpp private
+validChar  
+PR_bool bool
+validChar  
+Variable_Cj _enableSpawn
+validChar  
+Assignation_PyCpp =
+validChar  
+PR_bool_CppCj true
+validChar ;
+
+
+validChar  
+validChar  
+validChar  
+validChar  
+Variable_PyCpp void
+validChar  
+Variable_PyCpp Start
+Open_Parentheses (
+Closed_Parentheses )
+validChar {
+
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+Variable_Cj _floors
+validChar  
+Assignation_PyCpp =
+validChar  
+Variable_PyCpp new
+validChar  
+Variable_PyCpp GameObject
+validChar [
+validChar ]
+validChar {
+Variable_Cj _floor1
+validChar ,
+validChar  
+Variable_Cj _floor2
+validChar ,
+validChar  
+Variable_Cj _floor3
+validChar ,
+validChar  
+Variable_Cj _floor4
+validChar ,
+validChar  
+Variable_Cj _floor5
+validChar }
+validChar ;
+
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+Variable_PyCpp StartCoroutine
+Open_Parentheses (
+Variable_PyCpp SpawnerRoutine
+Open_Parentheses (
+Closed_Parentheses )
+Closed_Parentheses )
+validChar ;
+
+validChar  
+validChar  
+validChar  
+validChar  
+validChar }
+
+
+validChar  
+validChar  
+validChar  
+validChar  
+Variable_PyCpp IEnumerator
+validChar  
+Variable_PyCpp SpawnerRoutine
+Open_Parentheses (
+Closed_Parentheses )
+validChar {
+
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+Variable_PyCpp while
+Open_Parentheses (
+Variable_Cj _enableSpawn
+Closed_Parentheses )
+validChar {
+
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+Variable_Cj _time
+validChar  
+Assignation_PyCpp =
+validChar  
+Variable_PyCpp Random
+double/float .
+Variable_PyCpp Range
+Open_Parentheses (
+double/float 0.4
+Variable_PyCpp f
+validChar ,
+validChar  
+double/float 1.1
+Variable_PyCpp f
+Closed_Parentheses )
+validChar ;
+
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+Variable_Cj _floorToSpawn
+validChar  
+Assignation_PyCpp =
+validChar  
+Variable_Cj _floors
+validChar [
+Variable_PyCpp Random
+double/float .
+Variable_PyCpp Range
+Open_Parentheses (
+validChar 0
+validChar ,
+validChar  
+Integer 5
+Closed_Parentheses )
+validChar ]
+validChar ;
+
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+Variable_Cj _yPos
+validChar  
+Assignation_PyCpp =
+validChar  
+Variable_PyCpp Random
+double/float .
+Variable_PyCpp Range
+Open_Parentheses (
+Minus -
+double/float 0.2
+Variable_PyCpp f
+validChar ,
+validChar  
+double/float 0.2
+Variable_PyCpp f
+Closed_Parentheses )
+validChar ;
+
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+Variable_PyCpp Vector3
+validChar  
+Variable_Cj _spawnPosition
+validChar  
+Assignation_PyCpp =
+validChar  
+Variable_PyCpp new
+validChar  
+Variable_PyCpp Vector3
+Open_Parentheses (
+Variable_PyCpp transform
+double/float .
+Variable_PyCpp position
+double/float .
+Variable_PyCpp x
+validChar ,
+validChar  
+Variable_PyCpp transform
+double/float .
+Variable_PyCpp position
+double/float .
+Variable_PyCpp y
+validChar  
+Plus +
+validChar  
+Variable_Cj _yPos
+validChar ,
+validChar  
+validChar 0
+Closed_Parentheses )
+validChar ;
+
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+Variable_PyCpp yield
+validChar  
+Variable_PyCpp return
+validChar  
+Variable_PyCpp new
+validChar  
+Variable_PyCpp WaitForSeconds
+Open_Parentheses (
+Variable_Cj _time
+Closed_Parentheses )
+validChar ;
+
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+Variable_PyCpp GameObject
+validChar  
+Variable_PyCpp clone
+validChar  
+Assignation_PyCpp =
+validChar  
+Variable_PyCpp Instantiate
+Open_Parentheses (
+Variable_Cj _floorToSpawn
+validChar ,
+validChar  
+Variable_Cj _spawnPosition
+validChar ,
+validChar  
+Variable_PyCpp Quaternion
+double/float .
+Variable_PyCpp identity
+Closed_Parentheses )
+validChar ;
+
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar }
+
+validChar  
+validChar  
+validChar  
+validChar  
+validChar }
+
+
+validChar }
+
+Variable_PyCpp using
+validChar  
+Variable_PyCpp System
+double/float .
+Variable_PyCpp Collections
+validChar ;
+
+Variable_PyCpp using
+validChar  
+Variable_PyCpp System
+double/float .
+Variable_PyCpp Collections
+double/float .
+Variable_PyCpp Generic
+validChar ;
+
+Variable_PyCpp using
+validChar  
+Variable_PyCpp UnityEngine
+validChar ;
+
+Variable_PyCpp using
+validChar  
+Variable_PyCpp TMPro
+validChar ;
+
+
+Variable_PyCpp public
+validChar  
+Variable_PyCpp class
+validChar  
+Variable_PyCpp ColisionCoin
+validChar  
+validChar :
+validChar  
+Variable_PyCpp MonoBehaviour
+
+validChar {
+
+validChar  
+validChar  
+validChar  
+validChar  
+validChar [
+Variable_PyCpp SerializeField
+validChar ]
+validChar  
+Variable_PyCpp private
+validChar  
+Variable_PyCpp TMP_Text
+validChar  
+Variable_Cj _coinsCollected
+validChar ;
+
+validChar  
+validChar  
+validChar  
+validChar  
+Variable_PyCpp private
+validChar  
+PR_int int
+validChar  
+Variable_Cj _score
+validChar ;
+
+
+validChar  
+validChar  
+validChar  
+validChar  
+Variable_PyCpp void
+validChar  
+Variable_PyCpp OnTriggerEnter2D
+Open_Parentheses (
+Variable_PyCpp Collider2D
+validChar  
+Variable_Cj _colidedObject
+Closed_Parentheses )
+validChar {
+
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+PR_if if
+Open_Parentheses (
+Variable_Cj _colidedObject
+double/float .
+Variable_PyCpp gameObject
+double/float .
+Variable_PyCpp tag
+validChar  
+Equal_To_PyCpp ==
+validChar  
+validChar "
+Variable_PyCpp Coin
+validChar "
+Closed_Parentheses )
+validChar {
+
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+Variable_Cj _score
+Plus +
+Plus +
+validChar ;
+
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+Variable_Cj _coinsCollected
+double/float .
+Variable_PyCpp SetText
+Open_Parentheses (
+validChar "
+Variable_PyCpp Coins
+validChar :
+validChar  
+validChar "
+validChar  
+Plus +
+validChar  
+Variable_Cj _score
+Closed_Parentheses )
+validChar ;
+
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+Variable_PyCpp Destroy
+Open_Parentheses (
+Variable_Cj _colidedObject
+double/float .
+Variable_PyCpp gameObject
+Closed_Parentheses )
+validChar ;
+
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar  
+validChar }
+
+validChar  
+validChar  
+validChar  
+validChar  
+validChar }
+
+validChar }
+
