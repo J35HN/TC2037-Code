@@ -19,6 +19,7 @@ Date of creation and last modification:
 #include <dirent.h>
 #include <chrono>
 #include <thread>
+#include <cmath>
 using namespace std::chrono;
 // Global variables
 int nTokenTypes = 25; // Modify to according number of token types (add or delete number of colors [CSS] to match this number).
@@ -243,7 +244,7 @@ int main(){
     // Measure Time.
     auto start = high_resolution_clock::now();
     // Definitions of files and paths.
-    std::string file_InputText = "inputText.txt";
+    //std::string file_InputText = "inputText.txt";
     std::string file_InputRegEx = "inputRegex.txt";
     std::string file_regExMotor = "exprMotor1.l";
     std::string file_compiler = "compiler.cpp";
@@ -255,16 +256,21 @@ int main(){
     
     // Define amount of threads. My computer has 12 threads (6 Cores * 2 threads per core). In this case, I will only use 2.
     int number_threads = 2;
+    int step = 0;
     // Read amount of files in directory "inputs_text".
     readAmountInputFiles(directory_inputTexts);
     // If our amount of threads is greater or equal than the amount of input files, use the amount of threads neccesary.
+    // Else, assign each thread an amount of input files.
     if (number_threads >= inputFiles.size()){
         std::cout << "Number of threads is greater" << std::endl;
     } else {
         std::cout << "Numbre of threads is lower" << std::endl;
+        step = std::floor(inputFiles.size() / number_threads);
+        std::cout << step;
     }
+    
     /*
-    // Creation of the Flex file and the Compiler file.
+    // Creation of the Flex file.
     createFlexFile(file_InputRegEx, file_regExMotor);
     // Assign a color to a token type.
     for (int i = 0; i < nTokenTypes; i++){
@@ -275,6 +281,7 @@ int main(){
     // Sequentially, analyze each input file.
     for (int i = 0; i < inputFiles.size(); i++){
         htmlName = "SyntaxHi" + std::to_string(i);
+        // Creation of the compiler file.
         createCompilerCpp(file_compiler, file_tokensOutput, inputFiles[i]);
         // Check if flex file and compiler are created.
         if (ifFiles_FlexAndCompilerExist(file_regExMotor, file_compiler)){

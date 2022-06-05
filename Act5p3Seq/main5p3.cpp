@@ -242,7 +242,6 @@ int main(){
     // Measure Time.
     auto start = high_resolution_clock::now();
     // Definitions of files and paths.
-    std::string file_InputText = "inputText.txt";
     std::string file_InputRegEx = "inputRegex.txt";
     std::string file_regExMotor = "exprMotor1.l";
     std::string file_compiler = "compiler.cpp";
@@ -253,7 +252,7 @@ int main(){
     std::string htmlName;
     // Read amount of files in directory "inputs_text".
     readAmountInputFiles(directory_inputTexts);
-    // Creation of the Flex file and the Compiler file.
+    // Creation of the Flex file.
     createFlexFile(file_InputRegEx, file_regExMotor);
     // Assign a color to a token type.
     for (int i = 0; i < nTokenTypes; i++){
@@ -264,6 +263,7 @@ int main(){
     // Sequentially, analyze each input file.
     for (int i = 0; i < inputFiles.size(); i++){
         htmlName = "SyntaxHi" + std::to_string(i);
+        // Creation of the compiler file.
         createCompilerCpp(file_compiler, file_tokensOutput, inputFiles[i]);
         // Check if flex file and compiler are created.
         if (ifFiles_FlexAndCompilerExist(file_regExMotor, file_compiler)){
