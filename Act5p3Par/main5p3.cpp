@@ -18,6 +18,7 @@ Date of creation and last modification:
 #include <sys/types.h>
 #include <dirent.h>
 #include <chrono>
+#include <thread>
 using namespace std::chrono;
 // Global variables
 int nTokenTypes = 25; // Modify to according number of token types (add or delete number of colors [CSS] to match this number).
@@ -251,13 +252,28 @@ int main(){
     std::string tokenType;
     std::string color;
     std::string htmlName;
+    
+    // Define amount of threads. My computer has 12 threads (6 Cores * 2 threads per core). In this case, I will only use 2.
+    int number_threads = 2;
     // Read amount of files in directory "inputs_text".
     readAmountInputFiles(directory_inputTexts);
+    // If our amount of threads is greater or equal than the amount of input files, use the amount of threads neccesary.
+    if (number_threads >= inputFiles.size()){
+        std::cout << "Number of threads is greater" << std::endl;
+    } else {
+        std::cout << "Numbre of threads is lower" << std::endl;
+    }
+    /*
     // Creation of the Flex file and the Compiler file.
     createFlexFile(file_InputRegEx, file_regExMotor);
+    // Assign a color to a token type.
+    for (int i = 0; i < nTokenTypes; i++){
+        color = colors[i];
+        tokenType = tokensTypeName[i];
+        tokenTypeAndColor[tokenType] = color;
+    }
     // Sequentially, analyze each input file.
     for (int i = 0; i < inputFiles.size(); i++){
-        //file_compiler = "compiler" + std::to_string(i) + ".cpp";
         htmlName = "SyntaxHi" + std::to_string(i);
         createCompilerCpp(file_compiler, file_tokensOutput, inputFiles[i]);
         // Check if flex file and compiler are created.
@@ -267,12 +283,6 @@ int main(){
             if (ifFile_cExist("lex.yy.c")){
                 compileCFile("lex.yy.c", file_compiler);
                 open_tempFile();
-                // Assign a color to a token type.
-                for (int i = 0; i < nTokenTypes; i++){
-                    color = colors[i];
-                    tokenType = tokensTypeName[i];
-                    tokenTypeAndColor[tokenType] = color;
-                }
                 createHTML(file_tokensOutput, htmlName);
             } else {
                 std::cout << "Can not continue to execute the program, lex.yy.c file not created" << std::endl;
@@ -285,5 +295,7 @@ int main(){
     auto stop = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(stop - start);
     std::cout << "Time taken by program: " << duration.count() << " microseconds" << std::endl;
+    */
+
     return 0;
 }

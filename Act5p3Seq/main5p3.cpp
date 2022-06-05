@@ -255,6 +255,12 @@ int main(){
     readAmountInputFiles(directory_inputTexts);
     // Creation of the Flex file and the Compiler file.
     createFlexFile(file_InputRegEx, file_regExMotor);
+    // Assign a color to a token type.
+    for (int i = 0; i < nTokenTypes; i++){
+        color = colors[i];
+        tokenType = tokensTypeName[i];
+        tokenTypeAndColor[tokenType] = color;
+    }
     // Sequentially, analyze each input file.
     for (int i = 0; i < inputFiles.size(); i++){
         htmlName = "SyntaxHi" + std::to_string(i);
@@ -266,12 +272,6 @@ int main(){
             if (ifFile_cExist("lex.yy.c")){
                 compileCFile("lex.yy.c", file_compiler);
                 open_tempFile();
-                // Assign a color to a token type.
-                for (int i = 0; i < nTokenTypes; i++){
-                    color = colors[i];
-                    tokenType = tokensTypeName[i];
-                    tokenTypeAndColor[tokenType] = color;
-                }
                 createHTML(file_tokensOutput, htmlName);
             } else {
                 std::cout << "Can not continue to execute the program, lex.yy.c file not created" << std::endl;
