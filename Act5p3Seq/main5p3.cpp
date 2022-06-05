@@ -243,7 +243,7 @@ int main(){
     auto start = high_resolution_clock::now();
     // Definitions of files and paths.
     std::string file_InputRegEx = "inputRegex.txt";
-    std::string file_regExMotor = "exprMotor1.l";
+    std::string file_regExMotor = "exprMotor.l";
     std::string file_compiler = "compiler.cpp";
     std::string file_tokensOutput = "outputTokens.txt";
     std::string directory_inputTexts = "./inputs_text";
