@@ -217,6 +217,12 @@ void createHTML(std::string inputFileTxt, std::string name){
     myFile << "</html>";
     myFile.close();
 }
+
+void threadMain(int numberThread, int filesToAnalyze, bool isLast){
+    std::cout << "\nThread: " << numberThread << ". Files: " << filesToAnalyze << " last? " << isLast << std::endl;
+
+}
+
 /**
  * @brief Inserts to vector "inputFiles" the names of the inputs files in the input directory.
  * 
@@ -243,32 +249,30 @@ void createHTML(std::string inputFileTxt, std::string name){
 int main(){
     // Measure Time.
     auto start = high_resolution_clock::now();
-    // Definitions of files and paths.
-    std::string file_InputRegEx = "inputRegex.txt";
-    std::string file_regExMotor = "exprMotor.l";
+
+    /*
     std::string file_compiler = "compiler.cpp";
     std::string file_tokensOutput = "outputTokens.txt";
+
+    std::string htmlName;
+    */
+
+    // Definitions of files, paths and strings.
+    std::string file_InputRegEx = "inputRegex.txt";
+    std::string file_regExMotor = "exprMotor.l";
     std::string directory_inputTexts = "./inputs_text";
     std::string tokenType;
     std::string color;
-    std::string htmlName;
-    
+    bool isLast = false;
     // Define amount of threads. My computer has 12 threads (6 Cores * 2 threads per core). In this case, I will only use 2.
-    int number_threads = 2;
+    // BE SURE THAT THE NUMBER OF THREADS ARE NOT GREATER THAN 12. 
+    int number_threads = 5;
+    // Definition of threads, and integers that will help the threads. 
+    std::vector<std::thread> myThreads(number_threads);
     int step = 0;
+    int dif = 0;
     // Read amount of files in directory "inputs_text".
     readAmountInputFiles(directory_inputTexts);
-    // If our amount of threads is greater or equal than the amount of input files, use the amount of threads neccesary.
-    // Else, assign each thread an amount of input files.
-    if (number_threads >= inputFiles.size()){
-        std::cout << "Number of threads is greater" << std::endl;
-    } else {
-        std::cout << "Numbre of threads is lower" << std::endl;
-        step = std::floor(inputFiles.size() / number_threads);
-        std::cout << step;
-    }
-    
-    /*
     // Creation of the Flex file.
     createFlexFile(file_InputRegEx, file_regExMotor);
     // Assign a color to a token type.
@@ -277,6 +281,36 @@ int main(){
         tokenType = tokensTypeName[i];
         tokenTypeAndColor[tokenType] = color;
     }
+    // If our amount of threads is greater or equal than the amount of input files, use the amount of threads neccesary.
+    // Else, assign each thread an amount of input files.
+    if (number_threads >= inputFiles.size()){
+        // Execute threads.
+        for (int i = 0; i < inputFiles.size(); i++){
+            myThreads[i] = std::thread(threadMain, i, step, isLast);
+        }
+        // Wait and stop the threads.
+        for (int i = 0; i < inputFiles.size(); i++){
+            myThreads[i].join();
+        }
+    } else {
+        // Determine how many files should a thread analyze.
+        step = std::floor(inputFiles.size() / number_threads);
+        // Execute threads.
+        for (int i = 0; i < number_threads; i++){
+            // Add the remaining input files that are no part of a step into the last thread.
+            if (i == (number_threads-1)){
+                dif = inputFiles.size() - (step * number_threads);
+                isLast = true;
+            }
+            myThreads[i] = std::thread(threadMain, i, step + dif, isLast);
+        }
+        // Wait and stop the threads.
+        for (int i = 0; i < number_threads; i++){
+            myThreads[i].join();
+        }
+    }
+    
+    /*
     // Sequentially, analyze each input file.
     for (int i = 0; i < inputFiles.size(); i++){
         htmlName = "SyntaxHi" + std::to_string(i);

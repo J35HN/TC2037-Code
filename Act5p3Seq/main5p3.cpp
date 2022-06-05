@@ -241,7 +241,7 @@ void createHTML(std::string inputFileTxt, std::string name){
 int main(){
     // Measure Time.
     auto start = high_resolution_clock::now();
-    // Definitions of files and paths.
+    // Definitions of files, paths and strings.
     std::string file_InputRegEx = "inputRegex.txt";
     std::string file_regExMotor = "exprMotor.l";
     std::string file_compiler = "compiler.cpp";
