@@ -315,8 +315,6 @@ void threadMain(int numberOfThread, int filesToAnalyze, int step){
 int main(){
     // Measure Time.
     auto start = high_resolution_clock::now();
-
-
     // Define amount of threads. My computer has 12 threads (6 Cores * 2 threads per core). In this case, I will only use 2.
     // BE SURE THAT THE NUMBER OF THREADS ARE NOT GREATER THAN 12 NOR LESS THAN 1. 
     int number_threads = 2;
