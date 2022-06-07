@@ -5,7 +5,7 @@ Author:
 - Jeshua Nava Avila | A01639282
 Date of creation and last modification:
 - 06/04/2022
-- 06/XX/2022
+- 06/05/2022
 */
 #include <iostream>
 #include <fstream>
@@ -228,36 +228,18 @@ void createHTML(std::string inputFileTxt, std::string name){
     myFile << "</html>";
     myFile.close();
 }
-
+/**
+ * @brief Function that analyzes text and creates HTML. This function is to be run by a single thread.
+ * 
+ * @param numberOfThread what thread is running this procces.
+ * @param filesToAnalyze how many files this thread has to analyze.
+ * @param step the group of files this thread is in charge of.
+ */
 void threadMain(int numberOfThread, int filesToAnalyze, int step){
     //std::cout << "\nThread: " << numberOfThread << ". Files: " << filesToAnalyze << " last? " << isLast << std::endl;
     std::string file_compiler = "compiler" + std::to_string(numberOfThread) + ".cpp";
     std::string file_tokensOutput = "outputTokens" + std::to_string(numberOfThread) + ".txt";
     std::string htmlName;
-
-   /*
-    // Sequentially, analyze each input file.
-    for (int i = 0; i < inputFiles.size(); i++){
-        htmlName = "SyntaxHi" + std::to_string(i);
-        // Creation of the compiler file.
-        createCompilerCpp(file_compiler, file_tokensOutput, inputFiles[i]);
-        // Check if flex file and compiler are created.
-        if (ifFiles_FlexAndCompilerExist(file_regExMotor, file_compiler)){
-            compileFlexFile(file_regExMotor);
-            // Check if C file exist.
-            if (ifFile_cExist("lex.yy.c")){
-                compileCFile("lex.yy.c", file_compiler);
-                open_tempFile();
-                createHTML(file_tokensOutput, htmlName);
-            } else {
-                std::cout << "Can not continue to execute the program, lex.yy.c file not created" << std::endl;
-            }
-        } else {
-            std::cout << "Can not continue to execute the program, flex file or compiler file does not exist" << std::endl;
-            }
-    }
-    */
-
     // Definitions of starting and ending indexes.
     int start = numberOfThread * step;
     int end = 0;
